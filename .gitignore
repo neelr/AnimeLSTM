@@ -1,7 +1,5 @@
 logs
-weights
 .ipynb_checkpoints
-x.npy
-y.npy
 notes.npy
 .DS_Store
+numpy_array_saves
