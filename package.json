@@ -1,0 +1,23 @@
+{
+  "name": "animelstm-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "neelr",
+  "license": "MIT",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^1.7.4",
+    "express": "^4.17.1",
+    "music21j": "0.9.43",
+    "next": "^9.4.2",
+    "ract": "0.0.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rebass": "^4.0.7",
+    "socket.io": "^2.3.0",
+    "theme-ui": "^0.3.1"
+  }
+}
