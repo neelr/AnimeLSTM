@@ -1,19 +1,16 @@
 import React from "react"
-import io from "socket.io-client"
+import decode from "../static/decodeOutput"
 
 export default class extends React.Component {
     render() {
         return (
-            <h1>hi</h1>
+            <div>
+                <button id="hi">hihihi</button>
+                <script src="/static/decodeOutput.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+                <script src="/static/music21j/releases/music21.debug.js" ></script>
+                <script src="/static/script.js"></script>
+            </div>
         )
-    }
-    componentDidMount() {
-        let socket = io()
-
-        socket.on("connect", () => {
-            socket.on("note", d => {
-                console.log(d)
-            })
-        })
     }
 }

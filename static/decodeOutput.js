@@ -1,4 +1,4 @@
-export default {
+var decodeOutput = {
     0: '0',
     1: '0.1',
     2: '0.1.5',
