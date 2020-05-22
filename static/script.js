@@ -1,5 +1,7 @@
 const s = new music21.stream.Stream();
+var steps = 0
 var offset = 0
+var running = false
 var output_notes = []
 var lastTime, lastMetronome, lastKey
 let socket = io()
@@ -25,9 +27,19 @@ socket.on("note", d => {
         lastKey = key
         output_notes.push(key)
     } else if (pattern.includes("metronome")) {
-        let metronome = new music21.tempo.Metronome(Number(/-(.*)-/g.exec(pattern)[1]))
-        lastMetronome = metronome
-        output_notes.push(metronome)
+        lastMetronome = Number(/-(.*)-/g.exec(pattern)[1])
+        if (running) {
+            s.stopPlayStream()
+            s.playStream({
+                tempo: lastMetronome, done: () => {
+                    running = false
+                    steps += 1
+                    if (steps < 3) {
+                        run(true)
+                    }
+                }
+            })
+        }
     } else if (pattern.includes("timesig")) {
         let timesig = new music21.meter.TimeSignature(/-(.*)/g.exec(pattern)[1])
         lastTime = timesig
@@ -38,28 +50,42 @@ socket.on("note", d => {
         output_notes.push(new_note)
     }
     offset += 0.5
-    console.log(decodeOutput[d])
+    console.log(offset)
+    if (steps > 99 && !running) {
+        steps = 0
+        run(true)
+    }
 })
 document.getElementById("hi").onclick = () => {
+    running = true
     run(true)
 }
-
-
+document.getElementById("stop").onclick = () => {
+    running = false
+    run(false)
+}
 run = (v) => {
     s.elements = []
     output_notes.map(v => {
-        console.log(v)
-        console.log("YYYEEEEEEEEEE")
         if (v) {
             s.append(v)
         }
     })
-    output_notes = [lastKey, lastMetronome, lastTime]
+    output_notes = [lastKey, lastTime]
     if (v) {
+        steps = 0
+        offset = 0
         s.playStream({
-            done: () => run(true)
+            done: () => {
+                running = false
+                steps += 1
+                if (steps < 100) {
+                    run(true)
+                }
+            },
+            tempo: lastMetronome ? lastMetronome : s.tempo
         })
     } else {
-        s.stopPlatStream()
+        s.stopPlayStream()
     }
 }

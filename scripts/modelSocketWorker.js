@@ -1,5 +1,5 @@
 const tf = require("@tensorflow/tfjs-node")
-const inputs = require("./inputStarter")
+const inputs = require("./500Starter")
 const {
     Worker, isMainThread, parentPort, workerData
 } = require('worker_threads');
@@ -28,6 +28,9 @@ const indexOfMax = (arr) => {
     const handler = tf.io.fileSystem("model/model.json");
     let model = await tf.loadLayersModel(handler);
     function predict() {
+        if (Math.random() > 0.99) {
+            inputArray = inputs[Math.floor(Math.random() * inputs.length)].flat();
+        }
         model.predict(tf.tensor(inputArray.map(v => v / 804), [1, 200, 1])).data().then(d => {
             let max = indexOfMax(d)
             parentPort.postMessage(max)

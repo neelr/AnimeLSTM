@@ -19,7 +19,7 @@ next_server.prepare()
         app.get("/_next/*", handle)
         app.get("/static/*", handle)
         app.get("/", handle)
-        server.listen(3000, (err) => {
+        server.listen(3001, (err) => {
             if (err) throw err
             console.log('> Ready on http://localhost:3000')
         })

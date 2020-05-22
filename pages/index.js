@@ -6,6 +6,7 @@ export default class extends React.Component {
         return (
             <div>
                 <button id="hi">hihihi</button>
+                <button id="stop">STAWP</button>
                 <script src="/static/decodeOutput.js"></script>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
                 <script src="/static/music21j/releases/music21.debug.js" ></script>
